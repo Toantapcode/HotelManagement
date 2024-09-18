@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Layout from './components/Layout';
+import MyAccount from './components/pages/ManagementAccount/MyAccount';
+import ChangePassword from './components/pages/ManagementAccount/ChangePassword';
+import ManagementRoom from './components/pages/ManagementRoom';
+import ManagementEmployee from './components/pages/ManagementEmployee/ManagementEmployee';
+import Login from './components/pages/Login';
 
 function App() {
+  const [userRole, setUserRole] = useState(null);
+
+  const handleLogin = (role) => {
+    setUserRole(role);
+    // localStorage.setItem('userToken', role === 'admin' ? 'someAdminToken' : 'someUserToken');
+  };
+
+  const handleLogout = () => {
+    setUserRole(null);
+    // localStorage.removeItem('userToken');
+  };
+
+  const PrivateRoute = ({ element }) => {
+    return userRole ? element : <Navigate to="/login" />;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/" element={<PrivateRoute element={<Layout onLogout={handleLogout} userRole={userRole} />} />}>
+          <Route path="my__account" element={<MyAccount />} />
+          <Route path="change__password" element={<ChangePassword />} />
+          <Route path="room__management" element={<ManagementRoom />} />
+          <Route path="employee__management" element={<ManagementEmployee />} />
+          {/* Thêm các route khác nếu cần */}
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

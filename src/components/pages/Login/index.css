@@ -1,0 +1,109 @@
+
+
+.wrapper{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../assets/bg.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin:50px 0 40px 0
+}
+
+form{
+    width: 400px;
+    border-radius: 12px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+}
+
+.input__box{
+    width: 80%;
+    margin:30px auto;
+    height: 50px;
+    position: relative;
+}
+
+.input__box input{
+    width: 100%;
+    height: 100%;
+    font-size: 16px; 
+    padding: 0px 20px;
+    padding-right: 50px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    border: 2px solid rgba(255,255,255,.2);
+}
+
+.input__box input::placeholder{
+    font-size: 16px; 
+}
+
+.icon{
+    position: absolute;
+    right: 20px;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.remember__forgot{
+    display: flex;
+    justify-content: start;
+    margin-bottom: 30px;
+}
+
+.remember__forgot input[type="checkbox"]{
+    margin:0px 20px 0px 40px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
+.remember__forgot p{
+    color: white;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.btn__login{
+    width: 80%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin:0 auto;
+    display: block;
+    margin-bottom: 50px;
+
+    &:hover{
+        background: #ccc;
+    }
+}
+
+.Toastify__toast {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
