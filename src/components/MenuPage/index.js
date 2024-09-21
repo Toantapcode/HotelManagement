@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 const MenuPage = ({ userRole, onLogout }) => {
   const navigate = useNavigate();
 
-  // Menu chung cho user (không bao gồm Đăng xuất)
   const userItems = [
     {
       key: 'account',
@@ -36,7 +35,6 @@ const MenuPage = ({ userRole, onLogout }) => {
     },
   ];
 
-  // Thêm mục dành cho admin (không bao gồm Đăng xuất)
   const adminItems = [
     ...userItems,
     {
@@ -46,7 +44,6 @@ const MenuPage = ({ userRole, onLogout }) => {
     },
   ];
 
-  // Mục Đăng xuất riêng biệt
   const logoutItem = {
     key: 'log__out',
     icon: <LinkOutlined />,
@@ -62,7 +59,6 @@ const MenuPage = ({ userRole, onLogout }) => {
     }
   };
 
-  // Lựa chọn menu phù hợp với vai trò và thêm mục Đăng xuất vào sau cùng
   const menuItems = userRole === 'ADMIN' ? [...adminItems, logoutItem] : [...userItems, logoutItem];
 
   return (

@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 })
-// Add a request interceptor
+
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token")

@@ -12,12 +12,10 @@ function App() {
 
   const handleLogin = (role) => {
     setUserRole(role);
-    // localStorage.setItem('userToken', role === 'admin' ? 'someAdminToken' : 'someUserToken');
   };
 
   const handleLogout = () => {
     setUserRole(null);
-    // localStorage.removeItem('userToken');
   };
 
   const PrivateRoute = ({ element }) => {
@@ -33,7 +31,6 @@ function App() {
           <Route path="change__password" element={<ChangePassword />} />
           <Route path="room__management" element={<ManagementRoom />} />
           <Route path="employee__management" element={<ManagementEmployee />} />
-          {/* Thêm các route khác nếu cần */}
         </Route>
       </Routes>
     </Router>

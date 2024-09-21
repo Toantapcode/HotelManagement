@@ -11,44 +11,28 @@ const Login = ({ onLogin }) => {
   const [passwordInput, setPasswordInput] = useState('');
   const navigate = useNavigate();
 
-  // Hàm xử lý đăng nhập với API
   const handleLogin = async () => {
     try {
-      // Gửi yêu cầu POST đến API và nhận về token và role
       const response = await axiosInstance.post('http://localhost:8080/auth/login', {
         email: emailInput,
         password: passwordInput
       });
       console.log(response)
-      // Giả sử API trả về token và role
       if (response) {
         const { token, role, id } = response  ;
+        // console.log("Token:", token);
+        // console.log("Role:", role);
+        // console.log("UserID:", id);
 
-        
-        // In ra console những gì nhận được từ API
-        console.log("Token:", token);
-        console.log("Role:", role);
-        console.log("UserID:", id);
-        
-        // Nếu token và role trả về, đăng nhập thành công
         if (token && role) {
-          // Lưu token vào localStorage
           localStorage.setItem("token", token);
-          // localStorage.setItem("token", token);
-          
-          // Gọi hàm onLogin để xử lý logic cho role
           onLogin(role);
-
-          // Điều hướng dựa trên vai trò của người dùng
-          navigate(role === 'ADMIN' ? '/' : '/my__account');
+          navigate('/');
         } else {
-          // Nếu không có token hoặc role, thông báo lỗi
           toast.error("Đăng nhập không thành công, vui lòng thử lại!");
         }
       }
-
     } catch (error) {
-      // Hiển thị lỗi nếu có lỗi từ API
       console.log(error)
       toast.error("Có lỗi xảy ra khi kết nối đến server, vui lòng thử lại!");
     }

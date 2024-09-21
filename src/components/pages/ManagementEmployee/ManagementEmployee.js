@@ -6,7 +6,6 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 const { Option } = Select;
 
 const AdminManagement = () => {
-    const [users, setUsers] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
     const [form] = Form.useForm();
@@ -16,15 +15,14 @@ const AdminManagement = () => {
         try {
             const data = await axiosInstance.get('http://localhost:8080/admin/getAllUsers')
             console.log(data)
-                const updateData = data.usersList.map(item => ({ ...item, key: item.id }))
-                setData(updateData)
+            const updateData = data.usersList.map(item => ({ ...item, key: item.id }))
+            setData(updateData)
             
         } catch (err) {
             console.log(err)
         }
     }
     useEffect(() => {
-        // Fetch users from API using axios
         fetch()
     }, []);
 
@@ -35,7 +33,7 @@ const AdminManagement = () => {
             name: user.name,
             email: user.email,
             role: user.role,
-            password: user.password,  // Load the existing password into the form
+            password: user.password, 
         });
         setIsModalVisible(true);
     };
@@ -43,12 +41,12 @@ const AdminManagement = () => {
     const handleDelete = (id) => {
         axiosInstance.delete(`http://localhost:8080/admin/delete/${id}`)
             .then(() => {
-                message.success('User deleted successfully.');
+                message.success('Xoá thành công.');
                 fetch();
             })
             .catch(error => {
-                console.error('Error deleting user:', error);
-                message.error('Error deleting user.');
+                console.error(error);
+                message.error('Lỗi khi xóa người dùng.');
             });
     };
 
@@ -57,29 +55,27 @@ const AdminManagement = () => {
             .validateFields()
             .then(values => {
                 if (editingUser) {
-                    // Update user
                     axiosInstance.put(`http://localhost:8080/admin/update/${values.id}`, values)
                         .then(() => {
-                            message.success('User updated successfully.');
+                            message.success('Cập nhật người dùng thành công.');
                             setIsModalVisible(false);
-                            fetch(); // Fetch lại dữ liệu sau khi cập nhật thành công
+                            fetch();
                         })
                         .catch(error => {
-                            console.error('Error updating user:', error); // Log error if any
-                            message.error('Error updating user.');
+                            console.error(error);
+                            message.error('Lỗi khi cập nhật.');
                         });
                 } else {
-                    // Create new user
                     axiosInstance.post('http://localhost:8080/auth/register', values)
                         .then(response => {
-                            console.log('Created User:', response.data); // Log the newly created user
-                            message.success('User created successfully.');
+                            console.log(response.data);
+                            message.success('Thêm người dùng mới thành công.');
                             setIsModalVisible(false);
-                            fetch(); // Fetch lại dữ liệu sau khi thêm thành công
+                            fetch();
                         })
                         .catch(error => {
-                            console.error('Error creating user:', error); // Log error if any
-                            message.error('Error creating user.');
+                            console.error( error); 
+                            message.error('Lỗi khi thêm người mới.');
                         });
                 }
             })
@@ -103,7 +99,7 @@ const AdminManagement = () => {
             key: 'id',
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             key: 'name',
         },
@@ -123,9 +119,9 @@ const AdminManagement = () => {
             key: 'actions',
             render: (text, record) => (
                 <div>
-                    <Button onClick={() => handleEdit(record)} type="link">Edit</Button>
+                    <Button onClick={() => handleEdit(record)} type="link">Sửa</Button>
                     <Button onClick={() => handleDelete(record.id)} type="link" danger>
-                        Delete
+                        Xóa
                     </Button>
                 </div>
             ),
@@ -134,7 +130,7 @@ const AdminManagement = () => {
 
     return (
         <div className="p-6 max-w-4xl mx-auto bg-gray-100 rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">Manage Users</h2>
+            <h2 className="text-lg font-semibold mb-4">Quản lý Nhân viên</h2>
             <Button
                 type="primary"
                 onClick={() => {
@@ -144,7 +140,7 @@ const AdminManagement = () => {
                 }}
                 className="mb-4"
             >
-                Add User
+                Thêm nhân viên
             </Button>
             <Table
                 columns={columns}
@@ -171,14 +167,14 @@ const AdminManagement = () => {
                     <Form.Item
                         name="name"
                         label="Tên nhân viên"
-                        rules={[{ required: true, message: 'Cần nhập nhân viên' }]}  // Thông báo khi bỏ trống
+                        rules={[{ required: true, message: 'Cần nhập nhân viên' }]} 
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         name="email"
                         label="Tên đăng nhập"
-                        rules={[{ required: true, message: 'Cần nhập tên đăng nhập' }]}  // Thông báo khi bỏ trống
+                        rules={[{ required: true, message: 'Cần nhập tên đăng nhập' }]}  
                     >
                         <Input />
                     </Form.Item>
@@ -186,9 +182,9 @@ const AdminManagement = () => {
                         name="password"
                         label="Mật khẩu"
                         rules={[
-                            { required: true, message: 'Cần nhập mật khẩu' },  // Thông báo khi bỏ trống
+                            { required: true, message: 'Cần nhập mật khẩu' }, 
                             {
-                                pattern: /^(?=.*[A-Z]).{8,}$/,  // Kiểm tra mật khẩu hợp lệ (dài hơn 8 kí tự và có kí tự in hoa)
+                                pattern: /^(?=.*[A-Z]).{8,}$/,
                                 message: 'Mật khẩu phải dài hơn 8 kí tự và có kí tự in hoa',
                             }
                         ]}

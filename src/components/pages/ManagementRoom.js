@@ -14,7 +14,6 @@ const RoomManagement = () => {
   const [selectedRoomIds, setSelectedRoomIds] = useState([]);
   const [form] = Form.useForm();
 
-  // Fetch data from API
   const fetch = async () => {
     try {
       const response = await axiosInstance.get('http://localhost:8080/getAllRooms');
@@ -29,21 +28,18 @@ const RoomManagement = () => {
     fetch();
   }, []);
 
-  // Show Add Modal
   const showAddModal = () => {
     form.resetFields();
     setCurrentRoom(null);
     setIsModalOpen(true);
   };
 
-  // Show Edit Modal
   const showEditModal = (room) => {
     setCurrentRoom(room);
     form.setFieldsValue(room);
     setIsModalOpen(true);
   };
 
-  // Handle Form Submission
   const handleOk = () => {
     form
       .validateFields()
@@ -68,7 +64,6 @@ const RoomManagement = () => {
       });
   };
 
-  // Handle Delete
   const handleDelete = async (id) => {
     try {
       await axiosInstance.delete(`http://localhost:8080/Room/Delete/${id}`);
@@ -81,7 +76,6 @@ const RoomManagement = () => {
     }
   };
 
-  // Handle Delete Selected Rooms
   const handleDeleteSelected = async () => {
     try {
       await Promise.all(selectedRoomIds.map(id => axiosInstance.delete(`http://localhost:8080/Room/Delete/${id}`)));
@@ -94,15 +88,13 @@ const RoomManagement = () => {
     }
   };
 
-  // Handle Checkbox Change
   const handleCheckboxChange = (e, id) => {
-    e.stopPropagation(); // Prevent event from propagating to the card
+    e.stopPropagation(); 
     setSelectedRoomIds(prevIds =>
       prevIds.includes(id) ? prevIds.filter(roomId => roomId !== id) : [...prevIds, id]
     );
   };
 
-  // Close Modal
   const handleCancel = () => {
     setIsModalOpen(false);
   };

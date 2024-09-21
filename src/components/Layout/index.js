@@ -7,7 +7,7 @@ const Layout = ({ onLogout, userRole }) => {
     <div style={{ display: 'flex' }}>
       <MenuPage userRole={userRole} onLogout={onLogout} />
       <div style={{ marginLeft: '256px', padding: '20px', width: '100%' }}>
-        <Outlet /> {/* Đây là nơi render nội dung của các route con */}
+        <Outlet /> 
       </div>
     </div>
   );

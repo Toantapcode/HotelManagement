@@ -12,13 +12,13 @@ const ChangePassword = () => {
     });
     const [currentPassword, setCurrentPassword] = useState('');
 
-    // Fetch current password from API
+   
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const response = await axiosInstance.get('http://localhost:8080/adminuser/getProfile');
-                console.log('Fetched password:', response.users.password); // Adjust response according to API structure
-                setCurrentPassword(response.users.password); // Save the fetched password to state
+                console.log('Pw:', response.users.password);
+                setCurrentPassword(response.users.password); 
             } catch (err) {
                 console.log("Error fetching profile", err);
             }
@@ -26,10 +26,8 @@ const ChangePassword = () => {
         fetchProfile();
     }, []);
 
-    // Function to check the old password entered by the user
     const checkOldPasswordApi = (oldPassword) => {
         return new Promise((resolve, reject) => {
-            // Simulate API call to check if the old password is correct
             if (oldPassword === currentPassword) {
                 resolve(true);
             } else {
@@ -40,11 +38,7 @@ const ChangePassword = () => {
 
     const handleFinish = async (values) => {
         try {
-            // Check old password
             await checkOldPasswordApi(values.oldPassword);
-
-            // If the old password is correct, continue to change password
-            // Perform the API call to update the password here
             console.log('New Password:', values.newPassword);
             message.success('Đổi mật khẩu thành công!');
         } catch (error) {

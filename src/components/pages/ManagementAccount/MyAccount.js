@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button } from 'antd'; // No need for Select anymore
-import axiosInstance from '../../../request'; // Import axios instance
+import { Input, Button } from 'antd';
+import axiosInstance from '../../../request';
 import { toast, ToastContainer } from 'react-toastify';
 
 const MyAccount = () => {
-    // Khai báo state để lưu trữ dữ liệu người dùng và userId
     const [profile, setProfile] = useState({
         id:'',
         name: '',
@@ -13,27 +12,25 @@ const MyAccount = () => {
         role: ''
     });
 
-    // Fetch profile data from API on component mount
     useEffect(() => {
         const fetch = async () => {
             try {
                 const response = await axiosInstance.get('http://localhost:8080/adminuser/getProfile');
-                console.log('role', response); // Log response to check data
+                console.log('role', response);
                 setProfile({
                     id: response.users.id,
                     name: response.users.name,
                     email: response.users.email,
                     password: response.users.password,
-                    role: response.users.role // Set the role from the response
+                    role: response.users.role 
                 });
             } catch (err) {
-                console.log("Error fetching profile", err);
+                console.log("Lỗi hiển thị hồ sơ", err);
             }
         };
         fetch();
     }, []);
 
-    // Hàm cập nhật profile thông qua PUT API
     const updateProfile = async () => {
         try {
             const {id, name, email, password, role } = profile;
@@ -43,10 +40,10 @@ const MyAccount = () => {
                 password,
                 role,
             });
-            toast.success("Cập nhật thông tin thành công!"); // Thông báo thành công
+            toast.success("Cập nhật thông tin thành công!");
         } catch (error) {
-            toast.error("Cập nhật thông tin thất bại!"); // Thông báo lỗi
-            console.log("Error updating profile", error);
+            toast.error("Cập nhật thông tin thất bại!");
+            console.log(error);
         }
     };
 
@@ -66,8 +63,8 @@ const MyAccount = () => {
                             name="name"
                             className="mt-1"
                             placeholder="Nhập tên"
-                            value={profile.name} // Bind value to profile state
-                            onChange={(e) => setProfile({ ...profile, name: e.target.value })} // Update state on change
+                            value={profile.name}
+                            onChange={(e) => setProfile({ ...profile, name: e.target.value })} 
                         />
                     </div>
                     <div>
@@ -76,8 +73,8 @@ const MyAccount = () => {
                             name="email"
                             className="mt-1"
                             placeholder="Nhập email"
-                            value={profile.email} // Bind value to profile state
-                            onChange={(e) => setProfile({ ...profile, email: e.target.value })} // Update state on change
+                            value={profile.email} 
+                            onChange={(e) => setProfile({ ...profile, email: e.target.value })} 
                         />
                     </div>
                     <div>
@@ -86,18 +83,18 @@ const MyAccount = () => {
                             name="password"
                             className="mt-1"
                             placeholder="Nhập mật khẩu"
-                            value={profile.password} // Bind value to profile state
-                            onChange={(e) => setProfile({ ...profile, password: e.target.value })} // Update state on change
+                            value={profile.password} 
+                            onChange={(e) => setProfile({ ...profile, password: e.target.value })}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Role</label> {/* New role read-only field */}
+                        <label className="block text-sm font-medium text-gray-700">Role</label>
                         <Input
                             name="role"
                             className="mt-1"
                             placeholder="Vai trò"
-                            value={profile.role} // Bind value to profile state
-                            readOnly // Make the role field read-only
+                            value={profile.role} 
+                            readOnly
                             onChange={(e) => setProfile({ ...profile, role  : e.target.value })}
                         />
                     </div>
@@ -106,7 +103,7 @@ const MyAccount = () => {
                         <Button
                             type="primary"
                             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-                            onClick={updateProfile} // Gọi hàm updateProfile khi click nút Lưu
+                            onClick={updateProfile}
                         >
                             Lưu
                         </Button>
